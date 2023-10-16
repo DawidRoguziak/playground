@@ -2,24 +2,9 @@
 
 import {reactive} from "vue";
 import VTABlock from "@/components/ViewTransitionApiListAndElement/VTABlock.vue";
+import vtaForms from "@/data-sources/vta-forms";
 
-const list = reactive([
-  {
-    id: 1,
-    title: 'dsadasdasd',
-    content: 'dasdasdsadasd'
-  },
-  {
-    id: 2,
-    title: 'dsadasdasd',
-    content: 'dasdasdsadasd'
-  },
-  {
-    id: 3,
-    title: 'dsadasdasd',
-    content: 'dasdasdsadasd'
-  },
-])
+const list = reactive(vtaForms)
 
 </script>
 

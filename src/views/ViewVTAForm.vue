@@ -1,25 +1,25 @@
 <script setup>
 
-import {reactive} from "vue";
+import {toRef} from "vue";
+import vtaForms from "@/data-sources/vta-forms";
+import {useRoute} from "vue-router";
 
-const data = reactive({
-    id: 1,
-    title: 'dsadasdasd',
-    content: 'dasdasdsadasd'
-  })
+const route = useRoute()
+const data = toRef(vtaForms.find(vtaForm => vtaForm.id === parseInt(route.params.id)))
 
 </script>
 
 <template>
 
-  <div class=" text-white border-2 border-green-200 vta-form" :style="{'--vta-block': 'vta-block-'+ data.id}">
+  <div v-if="data" class=" text-white border-2 border-green-200 vta-form"
+       :style="{'--vta-block': 'vta-block-'+ data.id}">
     <div>{{ data.title }}</div>
     <div>{{ data.content }}</div>
   </div>
 
 </template>
 
-<style >
+<style>
 .vta-form {
   view-transition-name: var(--vta-block);
 }
