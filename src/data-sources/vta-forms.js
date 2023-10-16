@@ -1,17 +1,17 @@
 export default [
     {
         id: 1,
-        title: 'dsadasdasd',
-        content: 'dasdasdsadasd'
+        title: 'Test title 1',
+        content: 'kot ma ale'
     },
     {
         id: 2,
-        title: 'dsadasdasd',
-        content: 'dasdasdsadasd'
+        title: 'Test title 2',
+        content: 'ala ma kota'
     },
     {
         id: 3,
-        title: 'dsadasdasd',
-        content: 'dasdasdsadasd'
+        title: 'Test title 3',
+        content: 'lorem ipsum'
     },
 ]
