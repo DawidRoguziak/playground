@@ -1,0 +1,1 @@
+export const SYMBOL__DAD_EVENT_BUS = Symbol('drag_and_drop_event_bus')
