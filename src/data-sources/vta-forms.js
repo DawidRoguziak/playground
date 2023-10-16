@@ -14,4 +14,9 @@ export default [
         title: 'Test title 3',
         content: 'lorem ipsum'
     },
+    {
+        id: 4,
+        title: 'Test title 4',
+        content: 'sen'
+    },
 ]
