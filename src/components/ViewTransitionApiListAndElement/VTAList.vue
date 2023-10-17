@@ -22,7 +22,5 @@ const list = reactive(vtaForms)
 </template>
 
 <style >
-.vta-list {
-  view-transition-name: var(--vta-block);
-}
+
 </style>

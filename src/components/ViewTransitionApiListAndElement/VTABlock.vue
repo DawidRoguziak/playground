@@ -19,7 +19,8 @@ defineProps({
 
 <template>
 
-  <div class="text-white border-2 border-amber-200 vta-block " :style="{'--vta-block': 'vta-block-' + id}">
+  <div class="text-white border-2 border-amber-200 vta-block "
+       :style="{'--vta-block': 'vta-block-' + id}">
     <div>{{ title }}</div>
     <div>{{ content }}</div>
   </div>
@@ -28,6 +29,6 @@ defineProps({
 
 <style scoped>
 .vta-block {
-  //view-transition-name: vtablock;
+  view-transition-name: var(--vta-block);
 }
 </style>
