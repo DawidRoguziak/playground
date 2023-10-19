@@ -5,7 +5,6 @@ import AnimatedBox from "@/components/AnimatedBox/AnimatedBox.vue";
 import PageIndicator from "@/components/PageIndicator/PageIndicator.vue";
 import Box3D from "@/components/Box3D/Box3D.vue";
 import VTAList from "@/components/ViewTransitionApiListAndElement/VTAList.vue";
-import AnimatedBoxLoop from "@/components/AnimatedButton/AnimatedBoxLoop.vue";
 </script>
 
 <template>
