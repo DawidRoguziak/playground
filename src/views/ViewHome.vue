@@ -5,6 +5,7 @@ import AnimatedBox from "@/components/AnimatedBox/AnimatedBox.vue";
 import PageIndicator from "@/components/PageIndicator/PageIndicator.vue";
 import Box3D from "@/components/Box3D/Box3D.vue";
 import VTAList from "@/components/ViewTransitionApiListAndElement/VTAList.vue";
+import AnimatedBoxLoop from "@/components/AnimatedButton/AnimatedBoxLoop.vue";
 </script>
 
 <template>
@@ -27,6 +28,10 @@ import VTAList from "@/components/ViewTransitionApiListAndElement/VTAList.vue";
         <AnimatedBox style="width: 30%; height: 200px;">
           laudantium libero mollitia porro quae quam quidem suscipit, temporibus vero.
         </AnimatedBox>
+      </div>
+
+      <div class="mb-9">
+<!--        <AnimatedBoxLoop />-->
       </div>
 
       <div class="mb-9">
