@@ -6,6 +6,10 @@ const routes = [
         component: () => import('@/views/ViewHome.vue')
     },
     {
+        path: '/product-list',
+        component: () => import('@/views/ProductList.vue')
+    },
+    {
         path: '/vta-form/:id',
         component: () => import('@/views/ViewVTAForm.vue')
     },
