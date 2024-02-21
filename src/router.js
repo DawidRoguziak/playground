@@ -13,6 +13,10 @@ const routes = [
         path: '/vta-form/:id',
         component: () => import('@/views/ViewVTAForm.vue')
     },
+    {
+        path: '/simple-paint',
+        component: () => import('@/views/ViewPaint.vue')
+    },
 ]
 
 const router = createRouter({
