@@ -40,7 +40,7 @@ const onDragStart = ($event, item) => {
 <template>
   <div class="drag-and-drop-field">
 
-    <div  ref="listRef" class="w-100% min-h-[100px] border-amber-100 border border-dashed flex gap-3 p-3"
+    <div  ref="listRef" class="w-full min-h-[100px] border-amber-100 border border-dashed flex gap-3 p-3"
          @dragover="allowDrop"
          @drop="onDrop"
     >

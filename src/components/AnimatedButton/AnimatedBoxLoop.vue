@@ -23,13 +23,13 @@ const currentMessageIndex = ref(0)
 let interval = null;
 
 onMounted(() => {
-  const messageLastIndex = messages.length - 1;
-  interval = setInterval(() => {
-    transition(() => {
-      currentMessageIndex.value = currentMessageIndex.value < messageLastIndex ?
-          (currentMessageIndex.value + 1) : 0
-    })
-  }, 1000)
+  // const messageLastIndex = messages.length - 1;
+  // interval = setInterval(() => {
+  //   transition(() => {
+  //     currentMessageIndex.value = currentMessageIndex.value < messageLastIndex ?
+  //         (currentMessageIndex.value + 1) : 0
+  //   })
+  // }, 1000)
 
 });
 
