@@ -52,7 +52,7 @@ export default function () {
             url: `http://www.omdbapi.com/?apikey=${import.meta.env.VITE_omdbApiKey}&s=${search}&plot=full`
         });
 
-        films.list = response.data.Search;
+        films.list = response.data.Search ?? [];
         films.isLoading = false;
 
     }

@@ -2,6 +2,23 @@
 </script>
 
 <template>
+  <div class="flex gap-1 p-2 mt-8">
+    <router-link to="/">
+      <button class="bg-green-500 rounded cursor-pointer p-1 text-white">
+        Home
+      </button>
+    </router-link>
+    <router-link to="/search-sr">
+      <button class="bg-green-500 rounded cursor-pointer p-1 text-white">
+        Search
+      </button>
+    </router-link>
+    <router-link to="/product-list">
+      <button class="bg-green-500 rounded cursor-pointer p-1 text-white">
+        Product list
+      </button>
+    </router-link>
+  </div>
     <router-view/>
 </template>
 
