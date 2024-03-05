@@ -17,6 +17,10 @@ const routes = [
         path: '/simple-paint',
         component: () => import('@/views/ViewPaint.vue')
     },
+    {
+        path: '/search-sr',
+        component: () => import('@/views/SpeechRecognition.vue')
+    },
 ]
 
 const router = createRouter({
