@@ -6,6 +6,8 @@ const emit = defineEmits([
   'search'
 ]);
 
+const SpeechRecognition = ref(
+    window.SpeechRecognition || window.webkitSpeechRecognition);
 const recognition = ref();
 const isRecording = ref(false);
 const searchValue = ref('');
@@ -31,16 +33,11 @@ const triggerSearch = () => {
 }
 
 onMounted(() => {
-  //set lang
-  const SpeechRecognition =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
-  recognition.value = new SpeechRecognition();
+  recognition.value = new SpeechRecognition.value();
   recognition.value.lang = 'pl_PL'
-  //set lang
 
   recognition.value.onresult = (event) => {
     const result = event.results[0][0].transcript;
-
     if (!result || (result && result.length === 0)) {
       return;
     }
@@ -50,6 +47,16 @@ onMounted(() => {
     triggerSearch();
   };
 
+  recognition.value.onend = () => {
+    isRecording.value = false;
+  }
+
+  recognition.value.onerror = (event) => {
+    console.log(`Speech recognition error detected: ${event.error}`);
+    console.log(`Additional information: ${event.message}`);
+    isRecording.value = false;
+  }
+
 });
 
 </script>
@@ -57,7 +64,7 @@ onMounted(() => {
 <template>
   <div class="flex">
     <div class="relative w-full min-h-[50px]">
-      <span class="absolute right-3 top-1/2 -translate-y-1/2 ">
+      <span v-if="SpeechRecognition" class="absolute right-3 top-1/2 -translate-y-1/2 ">
         <span v-show="!isRecording"
               class="material-symbols-outlined text-md rounded-full shadow-gray-400 shadow-md p-1 cursor-pointer"
               @click="resolve"
