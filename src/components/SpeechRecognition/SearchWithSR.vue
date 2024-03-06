@@ -33,8 +33,12 @@ const triggerSearch = () => {
 }
 
 onMounted(() => {
+  if (!SpeechRecognition.value) {
+    return;
+  }
+
   recognition.value = new SpeechRecognition.value();
-  recognition.value.lang = 'pl_PL'
+  recognition.value.lang = 'pl-PL'
 
   recognition.value.onresult = (event) => {
     const result = event.results[0][0].transcript;
