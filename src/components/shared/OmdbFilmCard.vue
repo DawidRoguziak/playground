@@ -1,4 +1,6 @@
 <script setup>
+import Tag from "@/components/shared/Tag.vue";
+
 defineProps({
   Title: {
     type: String,
@@ -106,8 +108,21 @@ defineProps({
 </script>
 
 <template>
-  <div>
-    <img :src="Poster">
+  <div class="bg-white rounded-2xl overflow-hidden">
+    <div class="w-full flex justify-center">
+      <img :src="Poster" class="w-full object-fill">
+    </div>
+    <div class="p-2">
+      {{ Title }}
+    </div>
+    <div class="flex gap-2 p-2">
+      <Tag>
+        {{ Type }}
+      </Tag>
+      <Tag>
+        {{ Year }}
+      </Tag>
+    </div>
   </div>
 </template>
 

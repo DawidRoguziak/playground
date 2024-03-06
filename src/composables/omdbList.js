@@ -49,7 +49,7 @@ export default function () {
     const getFilms = async (search = 'bat') => {
         films.isLoading = true;
         const response = await api.get({
-            url: `http://www.omdbapi.com/?apikey=${import.meta.env.VITE_omdbApiKey}&s=${search}&plot=full`
+            url: `http://www.omdbapi.com/?apikey=${import.meta.env.VITE_omdbApiKey}&s=${search}`
         });
 
         films.list = response?.data?.Search ?? [];

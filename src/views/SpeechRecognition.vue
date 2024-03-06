@@ -25,12 +25,13 @@ const onSearch = (s = '') => {
         </div>
       </template>
       <template v-else>
-        <div v-if="films.list.length !== 0" class="grid grid-cols-cell-auto-fit gap-6">
-          <OmdbFilmCard v-for="film in films.list" :key="film.imdbID" v-bind="film"/>
+        <div v-if="films.list.length !== 0" class="grid grid-cols-cell-auto-fit  auto-rows-[120px_auto_auto] gap-6">
+          <OmdbFilmCard v-for="film in films.list" :key="film.imdbID" v-bind="film" class=" grid grid-rows-subgrid row-span-3"/>
         </div>
         <div v-if="films.list.length === 0" class="flex justify-center align-baseline">
           <div class="text-white">
-            <span>Search for films, <a  target="_blank" href="https://www.omdbapi.com/" class="underline">OMDb API</a></span>
+            <span>Search for films, <a target="_blank" href="https://www.omdbapi.com/" class="underline">OMDb
+              API</a></span>
           </div>
         </div>
       </template>
