@@ -20,7 +20,6 @@ const resolve = () => {
   if (isRecording.value) {
     // stop not work on windows????
     recognition.value.stop();
-    isRecording.value = false;
   } else {
     recognition.value.start();
     isRecording.value = true;
