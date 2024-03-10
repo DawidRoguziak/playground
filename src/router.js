@@ -21,6 +21,10 @@ const routes = [
         path: '/search-sr',
         component: () => import('@/views/SpeechRecognition.vue')
     },
+    {
+        path: '/motion',
+        component: () => import('@/views/ViewMotion.vue')
+    },
 ]
 
 const router = createRouter({

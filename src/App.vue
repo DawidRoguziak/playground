@@ -18,6 +18,11 @@
         Product list
       </button>
     </router-link>
+    <router-link to="/motion">
+      <button class="bg-green-500 rounded cursor-pointer p-1 text-white">
+        Motion JS
+      </button>
+    </router-link>
   </div>
     <router-view/>
 </template>
