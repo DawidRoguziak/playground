@@ -1,5 +1,6 @@
 <script setup>
 import {formatCurrency} from "@/composables/formatCurrency";
+import {ref} from "vue";
 
 defineProps({
   product: {
@@ -9,10 +10,15 @@ defineProps({
 });
 
 const {format} = formatCurrency();
+const selfRef = ref(null);
+
+defineExpose({
+  selfRef
+})
 </script>
 
 <template>
-  <div class="product-shadow bg-white grid grid-rows-subgrid row-span-3 gap-1" :data-product-id="product.id">
+  <div ref="selfRef" class="product-shadow bg-white grid grid-rows-subgrid row-span-3 gap-1" :data-product-id="product.id">
     <img class="object-cover w-full h-full" :src="product.image">
     <h3 class="p-2 text-sm   clip-text-size" >
       {{ product.title }}
@@ -23,6 +29,7 @@ const {format} = formatCurrency();
         Buy
       </button>
     </div>
+    <slot></slot>
   </div>
 </template>
 
