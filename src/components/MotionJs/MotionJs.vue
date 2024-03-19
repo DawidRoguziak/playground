@@ -3,6 +3,7 @@ import {animate, stagger, glide} from "motion";
 import {onMounted, onUnmounted, reactive, ref} from "vue";
 import ProductCard from "@/components/ProductList/ProductCard.vue";
 import CardWithCursor from "@/components/MotionJs/CardWithCursor.vue";
+import ResizableObserverDiv from "@/components/ResizableObserverDiv/ResizableObserverDiv.vue";
 
 onMounted(() => {
   animate('.box',
@@ -28,6 +29,9 @@ onUnmounted(() => {
   <div class="w-full h-full p-10">
     <div class="bg-blue-500 w-[500px] h-[200px] t1">
 
+    </div>
+    <div class="w-full">
+      <ResizableObserverDiv ></ResizableObserverDiv>
     </div>
      <CardWithCursor/>
 
