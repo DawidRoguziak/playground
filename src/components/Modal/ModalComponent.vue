@@ -1,51 +1,57 @@
 <template>
   <Transition name="modal-outer">
-    <component
+    <div
         v-show="isOpen"
         ref="modalRef"
-        :is="renderAsDialog ? 'dialog' : 'div'"
-        :class="{'fixed top-0 left-0 bg-black bg-opacity-30': !renderAsDialog, 'bg-transparent': renderAsDialog}"
-        class="w-full h-[100svh] flex justify-center"
+        class="w-full h-[100svh] flex justify-center items-center overflow-hidden"
+        :class="{'fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-30': !renderAsDialog, 'bg-transparent': renderAsDialog}"
+        @click="closeByOverlay"
     >
-      <Transition name="modal-inner">
-        <div
+      <Transition appear name="modal-inner">
+        <component
             v-if="isOpen"
-            class="flex flex-col  justify-center items-center h-full w-[clamp(300px,100%,600px)]"
+            ref="modalWrapper"
+            class="flex flex-col justify-center items-center w-[clamp(300px,100%,600px)]"
+            :is="renderAsDialog ? 'dialog' : 'div'"
+            :class="{'animation-hidden': renderAsDialog}"
+            @click.prevent.stop="() => {}"
         >
-          <div class="w-full rounded bg-white">
+          <div class="w-full max-h-[calc(100svh_-_30px)] rounded bg-white">
             <template v-if="showHeader">
-              <slot name="header">
-                <div class="bg-neutral-100 flex justify-between rounded-t-md w-full py-1 px-2">
+              <div class="bg-neutral-100 flex justify-between rounded-t-md w-full py-1 px-2"
+                   :class="[...headerClasses]">
+                <slot name="header">
                   <div>
-                    Tytył modala
+                    {{ modalTitle }}
                   </div>
 
                   <div class="" @click="closeModal">
                     X
                   </div>
-                </div>
-              </slot>
+                </slot>
+              </div>
             </template>
 
             <template v-if="showBody">
-              <slot name="default">
-                <div class="bg-white py-1 px-2">
+              <div class="bg-white py-1 px-2 overflow-auto h-full max-h-[calc(100svh-120px)] max-md:max-h-[100svh-10px]"
+                   :class="[...bodyClasses]">
+                <slot name="default">
                   body
-                </div>
-              </slot>
+                </slot>
+              </div>
             </template>
 
             <template v-if="showFooter">
-              <slot name="footer">
-                <div class="bg-neutral-100 rounded-b-md w-full py-1 px-2">
+              <div class="bg-neutral-100 rounded-b-md w-full py-1 px-2" :class="[...footerClasses]">
+                <slot name="footer">
                   footer
-                </div>
-              </slot>
+                </slot>
+              </div>
             </template>
           </div>
-        </div>
+        </component>
       </Transition>
-    </component>
+    </div>
   </Transition>
 </template>
 
@@ -61,6 +67,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  modalTitle: {
+    type: String,
+    default: ''
+  },
   renderAsDialog: {
     type: Boolean,
     default: true
@@ -73,61 +83,82 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  registerEscEvent: {
+    type: Boolean,
+    default: true
+  },
+  closableByOverLay: {
+    type: Boolean,
+    default: true
+  },
   showFooter: {
     type: Boolean,
     default: true,
-  }
+  },
+  headerClasses: {
+    type: [Object, Array],
+    default: () => [],
+  },
+  bodyClasses: {
+    type: [Object, Array],
+    default: () => [],
+  },
+  footerClasses: {
+    type: [Object, Array],
+    default: () => [],
+  },
 });
 
-const {modalRef, isOpen, lockClose} = useModalState();
+const {modalRef, isOpen, modalWrapper} = useModalState();
+const {registerEscEvent, removeEscEvent} = useModalListeners(isOpen, modalRef, emit);
 
-const {isProviderSet} = inject(useModalInjectionKey, () => ({
-  isProviderSet: false,
-}), true);
-
-const {registerEvent, removeEvent} = useModalListeners(isOpen, isProviderSet, emit);
-
-const openModal = async () => {
+const openModal = async (emitEvent = false) => {
   isOpen.value = true;
-  await nextTick();
-  if (props.renderAsDialog) {
-    modalRef.value.showModal();
+  if (emitEvent) {
+    emit('update:modelValue', true)
   }
 
+  await nextTick();
+
+  if (props.renderAsDialog) {
+    modalWrapper.value.showModal();
+  }
+
+  await nextTick();
+
+  if (props.registerEscEvent) {
+    registerEscEvent();
+  }
 }
 
-const closeModal = async () => {
-  lockClose.value = true
+const closeModal = async (emitEvent = false) => {
   isOpen.value = false;
 
   await nextTick();
 
   if (props.renderAsDialog) {
-    modalRef.value.close();
+    // dialog is already destroyed by isOpen so this is only for safety, so user won't be stuck on dialog
+    modalWrapper.value?.close();
   }
 
-  emit('update:modelValue', false);
-  lockClose.value = false;
+  if (emitEvent) {
+    emit('update:modelValue', false)
+  }
 
+  if (props.registerEscEvent) {
+    removeEscEvent();
+  }
 }
 
-// esc events
-watch(() => isOpen.value,
-    async (newValue) => {
-      await nextTick()
-      if (newValue) {
-        registerEvent();
-      } else {
-        removeEvent();
-      }
-    });
+const closeByOverlay = () => {
+  if (props.closableByOverLay) {
+    closeModal(true);
+  }
+}
 
 watch(
     () => props.modelValue,
     (newVal) => {
-      if (lockClose.value) {
-        return
-      }
       if (newVal) {
         openModal();
       } else {
@@ -161,18 +192,51 @@ watch(
   transform: scale(0.8);
 }
 
+.modal-inner-enter-to {
+  opacity: 01;
+  transform: scale(1);
+}
+
 .modal-inner-leave-to {
   transform: scale(0.8);
 }
 
+
+dialog {
+  transition: all 0.3s cubic-bezier(0.52, 0.02, 0.19, 1.02);
+}
+
 dialog[open] {
-  //margin: 0 !important;
+  transition: all 0.3s cubic-bezier(0.52, 0.02, 0.19, 1.02);
 }
 
 dialog::backdrop {
-  width: 100%;
-  height: 100%;
   background: rgba(0, 0, 0, .3);
+}
+
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: scaleY(.8);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scaleY(.8);
+  }
 }
 
 

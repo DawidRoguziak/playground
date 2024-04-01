@@ -18,9 +18,25 @@ const openModal = () =>  {
     <button  class="bg-green-500" @click="openModal">CCC</button>
   </div>
   <ModalComponent  v-model="modalActive">
-    <slot>
+
     <div>Modal C</div>
-    </slot>
+    <div>Modal C</div>
+    <div>Modal C</div>
+    <div>Modal C</div>
+    <div>Modal C</div>
+    <div>Modal C</div>
+    <div>Modal C</div>
+    <div>Modal C</div>
+    <div>Modal C</div>
+    <div>Modal C</div>
+    <div>Modal C</div>
+    <div>Modal C</div>
+    <div>Modal C</div>
+    <div>Modal C</div>
+    <div>Modal C</div>
+    <div>Modal C</div>
+    <div>Modal C</div>
+
   </ModalComponent>
 </template>
 

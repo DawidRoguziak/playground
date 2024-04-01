@@ -16,7 +16,7 @@ export function useModalListeners(state, modalRef, emit) {
         });
     }
 
-    const registerEvent = () => {
+    const registerEscEvent = () => {
         if (!isEventRegistered.value) {
             isEventRegistered.value = true
             document.addEventListener('keydown', closeModalCallback);
@@ -24,7 +24,7 @@ export function useModalListeners(state, modalRef, emit) {
         }
     }
 
-    const removeEvent = () => {
+    const removeEscEvent = () => {
         if (isEventRegistered.value) {
             isEventRegistered.value = false
             document.removeEventListener('keydown', closeModalCallback);
@@ -32,11 +32,11 @@ export function useModalListeners(state, modalRef, emit) {
     }
 
     onUnmounted(() => {
-        removeEvent();
+        removeEscEvent();
     });
 
     return {
-        removeEvent,
-        registerEvent
+        removeEscEvent,
+        registerEscEvent
     }
 }
