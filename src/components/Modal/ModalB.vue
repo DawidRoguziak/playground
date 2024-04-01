@@ -4,7 +4,7 @@ import ModalComponent from "@/components/Modal/ModalComponent.vue";
 import {useModal} from "@/components/Modal/useModal";
 import ModalA from "@/components/Modal/ModalA.vue";
 
-const {closeModal,isOpen,openModal} = useModal();
+const {} = useModal();
 
 </script>
 

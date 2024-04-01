@@ -6,8 +6,6 @@ import PageIndicator from "@/components/PageIndicator/PageIndicator.vue";
 import Box3D from "@/components/Box3D/Box3D.vue";
 import VTAList from "@/components/ViewTransitionApiListAndElement/VTAList.vue";
 import AnimatedBoxLoop from "@/components/AnimatedButton/AnimatedBoxLoop.vue";
-import ModalA from "@/components/Modal/ModalA.vue";
-import ModalB from "@/components/Modal/ModalB.vue";
 import ModalC from "@/components/Modal/ModalC.vue";
 </script>
 
@@ -49,8 +47,6 @@ import ModalC from "@/components/Modal/ModalC.vue";
       <div>
 
 
-       <ModalA></ModalA>
-        <ModalB></ModalB>
         <ModalC></ModalC>
       </div>
 

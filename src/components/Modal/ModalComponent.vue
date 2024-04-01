@@ -1,8 +1,11 @@
 <template>
   <Transition name="modal-outer">
-    <div
+    <component
         v-show="isOpen"
-        class="fixed w-full bg-black bg-opacity-30 h-[100svh] top-0 left-0 flex justify-center"
+        ref="modalRef"
+        :is="renderAsDialog ? 'dialog' : 'div'"
+        :class="{'fixed top-0 left-0 bg-black bg-opacity-30': !renderAsDialog, 'bg-transparent': renderAsDialog}"
+        class="w-full h-[100svh] flex justify-center"
     >
       <Transition name="modal-inner">
         <div
@@ -17,7 +20,7 @@
                     Tytył modala
                   </div>
 
-                  <div class="" @click="innerCloseModal">
+                  <div class="" @click="closeModal">
                     X
                   </div>
                 </div>
@@ -42,12 +45,12 @@
           </div>
         </div>
       </Transition>
-    </div>
+    </component>
   </Transition>
 </template>
 
 <script setup>
-import {inject, watch} from "vue";
+import {inject, nextTick, watch} from "vue";
 import {useModalInjectionKey, useModalState} from "@/components/Modal/useModal";
 import {useModalListeners} from "@/components/Modal/useModalListenners";
 
@@ -57,6 +60,10 @@ const props = defineProps({
   modelValue: {
     type: Boolean,
     default: false,
+  },
+  renderAsDialog: {
+    type: Boolean,
+    default: true
   },
   showHeader: {
     type: Boolean,
@@ -72,25 +79,42 @@ const props = defineProps({
   }
 });
 
-const {isOpen, isProviderSet} = inject(useModalInjectionKey, () => ({
+const {modalRef, isOpen, lockClose} = useModalState();
+
+const {isProviderSet} = inject(useModalInjectionKey, () => ({
   isProviderSet: false,
-  ...useModalState()
 }), true);
 
 const {registerEvent, removeEvent} = useModalListeners(isOpen, isProviderSet, emit);
 
-
-const innerCloseModal = () => {
-  if (isProviderSet) {
-    isOpen.value = false;
-  } else {
-    emit('update:modelValue', false);
+const openModal = async () => {
+  isOpen.value = true;
+  await nextTick();
+  if (props.renderAsDialog) {
+    modalRef.value.showModal();
   }
+
+}
+
+const closeModal = async () => {
+  lockClose.value = true
+  isOpen.value = false;
+
+  await nextTick();
+
+  if (props.renderAsDialog) {
+    modalRef.value.close();
+  }
+
+  emit('update:modelValue', false);
+  lockClose.value = false;
+
 }
 
 // esc events
 watch(() => isOpen.value,
-    (newValue) => {
+    async (newValue) => {
+      await nextTick()
       if (newValue) {
         registerEvent();
       } else {
@@ -101,8 +125,13 @@ watch(() => isOpen.value,
 watch(
     () => props.modelValue,
     (newVal) => {
-      if (!isProviderSet) {
-        isOpen.value = newVal;
+      if (lockClose.value) {
+        return
+      }
+      if (newVal) {
+        openModal();
+      } else {
+        closeModal()
       }
     }
 );
@@ -135,4 +164,16 @@ watch(
 .modal-inner-leave-to {
   transform: scale(0.8);
 }
+
+dialog[open] {
+  //margin: 0 !important;
+}
+
+dialog::backdrop {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .3);
+}
+
+
 </style>

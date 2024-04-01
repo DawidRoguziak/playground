@@ -1,22 +1,26 @@
 import {onMounted, onUnmounted, ref} from "vue";
 
-export function useModalListeners(state, isProviderSet, emit) {
+export function useModalListeners(state, modalRef, emit) {
     const isEventRegistered = ref(false);
 
     const closeModalCallback = (event) => {
         if (event.key === "Escape") {
             state.value = false;
-
-            if (!isProviderSet) {
-                emit('update:modelValue', false)
-            }
+            emit('update:modelValue', false)
         }
+    }
+
+    const disableDialogCancel = () => {
+        modalRef.value.addEventListener('cancel', (event) => {
+            event.preventDefault();
+        });
     }
 
     const registerEvent = () => {
         if (!isEventRegistered.value) {
             isEventRegistered.value = true
             document.addEventListener('keydown', closeModalCallback);
+            disableDialogCancel();
         }
     }
 

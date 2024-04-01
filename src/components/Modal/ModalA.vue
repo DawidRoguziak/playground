@@ -3,7 +3,7 @@
 import ModalComponent from "@/components/Modal/ModalComponent.vue";
 import {useModal} from "@/components/Modal/useModal";
 
-const {closeModal,isOpen,openModal} = useModal();
+const {} = useModal();
 
 </script>
 
