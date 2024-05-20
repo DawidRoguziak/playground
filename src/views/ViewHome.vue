@@ -7,6 +7,12 @@ import Box3D from "@/components/Box3D/Box3D.vue";
 import VTAList from "@/components/ViewTransitionApiListAndElement/VTAList.vue";
 import AnimatedBoxLoop from "@/components/AnimatedButton/AnimatedBoxLoop.vue";
 import ModalC from "@/components/Modal/ModalC.vue";
+import {useElementFitFromAnchor} from "@/composables/useElementFitFromAnchor";
+import {ref} from "vue";
+
+const element = ref();
+const {fitsInViewport} = useElementFitFromAnchor(element,500);
+
 </script>
 
 <template>
@@ -48,6 +54,13 @@ import ModalC from "@/components/Modal/ModalC.vue";
 
 
         <ModalC></ModalC>
+      </div>
+
+      <div class="mb-2 text-red-500">
+        {{ fitsInViewport }}
+      </div>
+      <div class="mb-9 flex justify-end">
+          <div ref="element" class="text-amber-300 w-[100px]">test</div>
       </div>
 
     </div>
