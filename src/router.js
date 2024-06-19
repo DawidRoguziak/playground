@@ -25,6 +25,10 @@ const routes = [
         path: '/motion',
         component: () => import('@/views/ViewMotion.vue')
     },
+    {
+        path: '/glowing-card',
+        component: () => import('@/views/ViewGlowingCards.vue')
+    },
 ]
 
 const router = createRouter({

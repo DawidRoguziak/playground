@@ -22,6 +22,11 @@
       <button class="bg-green-500 rounded cursor-pointer p-1 text-white">
         Motion JS
       </button>
+    </router-link >
+    <router-link to="/glowing-card">
+      <button class="bg-green-500 rounded cursor-pointer p-1 text-white">
+        Glowing Card
+      </button>
     </router-link>
   </div>
     <router-view/>
