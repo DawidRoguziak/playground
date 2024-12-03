@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {ref, useId} from "vue";
 import type {AreaItem} from "@/features/drag-to-select/components/drag-to-select-area/types.ts";
-import {useDragToSelectAreaSelect} from "@/features/drag-to-select/components/composables/useDragToSelectAreaSelect.ts";
+import {useDragToSelectAreaSelect} from "@/features/drag-to-select/composables/useDragToSelectAreaSelect.ts";
 
 const items = ref<AreaItem[]>(Array.from({length: 30}, (_, i) => ({text: (i + 1) + '', id: useId()})));
 

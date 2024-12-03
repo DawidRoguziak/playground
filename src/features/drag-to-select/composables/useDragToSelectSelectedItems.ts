@@ -1,7 +1,7 @@
 import type {ComputedRef, Ref} from "vue";
 import {computed, ref, useTemplateRef} from "vue";
 import {useElementBounding} from "@vueuse/core";
-import {DOMVector} from "@/features/drag-to-select/components/classes/DOMVector.ts";
+import {DOMVector} from "@/features/drag-to-select/classes/DOMVector.ts";
 
 type UseDragToSelectAreaSelectParams = {
   selectorAreaRect: Ref<DOMVector | null>

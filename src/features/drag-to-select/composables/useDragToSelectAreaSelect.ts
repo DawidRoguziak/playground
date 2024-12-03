@@ -1,9 +1,9 @@
 import {computed, type ComputedRef, type Ref, ref, useTemplateRef} from "vue";
-import {DOMVector} from "@/features/drag-to-select/components/classes/DOMVector.ts";
+import {DOMVector} from "@/features/drag-to-select/classes/DOMVector.ts";
 import {
   type UseDragToSelectSelectedItems,
   useDragToSelectSelectedItems
-} from "@/features/drag-to-select/components/composables/useDragToSelectSelectedItems.ts";
+} from "@/features/drag-to-select/composables/useDragToSelectSelectedItems.ts";
 
 type UseDragToSelectAreaSelect = {
   selectorAreaRect: Ref<DOMVector | null>,
