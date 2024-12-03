@@ -3,5 +3,11 @@
 </script>
 
 <template>
-  <RouterView />
+<div>
+  test
+</div>
 </template>
+
+<style scoped>
+
+</style>
