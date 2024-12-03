@@ -6,10 +6,10 @@ import {useDragToSelectAreaSelect} from "@/features/drag-to-select/components/co
 const items = ref<AreaItem[]>(Array.from({length: 30}, (_, i) => ({text: (i + 1) + '', id: useId()})));
 
 const {
-  selectedItems,
   selectedItemsCounter,
-  selectorAreaRect,
+  selectedItems,
   stylesForSelectingField,
+  selectorAreaRect,
   updateSelectedItems,
   onPointerDown,
   onPointerUp,
@@ -27,13 +27,16 @@ const {
   </div>
   <div
     ref="dragToSelectAreaRef"
-    class="relative z-0 grid grid-cols-8 sm:grid-cols-10 gap-4 p-4 border-2 border-black -translate-y-0.5"
+    class="relative z-0 grid grid-cols-8 sm:grid-cols-10 gap-4 p-4 border-2 focus:outline-none focus:border-dashed border-black -translate-y-0.5"
+    :tabIndex="-1"
     @pointerdown="onPointerDown"
     @pointermove="($event: PointerEvent) => {
       onPointerMove($event);
       updateSelectedItems();
     }"
-    @pointerup="onPointerUp"
+    @pointerup="() => {
+      onPointerUp();
+    }"
   >
     <div v-for="item in items"
          :key="item.id"

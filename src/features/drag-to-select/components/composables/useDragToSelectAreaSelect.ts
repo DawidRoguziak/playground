@@ -1,4 +1,4 @@
-import {computed, type ComputedRef, type Ref, ref} from "vue";
+import {computed, type ComputedRef, type Ref, ref, useTemplateRef} from "vue";
 import {DOMVector} from "@/features/drag-to-select/components/classes/DOMVector.ts";
 import {
   type UseDragToSelectSelectedItems,
@@ -7,6 +7,7 @@ import {
 
 type UseDragToSelectAreaSelect = {
   selectorAreaRect: Ref<DOMVector | null>,
+  isDragging: Ref<boolean>,
   stylesForSelectingField: ComputedRef<Record<string, string> | null>,
   onPointerDown: (event: PointerEvent) => void,
   onPointerMove: (event: PointerEvent) => void,
@@ -16,10 +17,14 @@ type UseDragToSelectAreaSelect = {
 export function useDragToSelectAreaSelect(): UseDragToSelectAreaSelect {
   const selectorAreaRect = ref<DOMVector | null>(null);
   const isDragging = ref<boolean>(false);
+  const containerRef = useTemplateRef<HTMLElement>("dragToSelectAreaRef");
+
   const {selectedItemsCounter, selectedItems, updateSelectedItems} = useDragToSelectSelectedItems({
     selectorAreaRect,
-    isDragging
+    isDragging,
+    containerRef
   });
+
 
   const stylesForSelectingField = computed<Record<string, string> | null>(() => {
     if (!selectorAreaRect.value) {
@@ -61,6 +66,8 @@ export function useDragToSelectAreaSelect(): UseDragToSelectAreaSelect {
 
     const containerRect = (event.currentTarget as Element)?.getBoundingClientRect?.()
 
+    containerRef.value?.focus();
+
     const nextDragVector = new DOMVector(
       selectorAreaRect.value.x,
       selectorAreaRect.value.y,
@@ -77,15 +84,20 @@ export function useDragToSelectAreaSelect(): UseDragToSelectAreaSelect {
   }
 
   async function onPointerUp() {
-    selectorAreaRect.value = null;
-    isDragging.value = false;
+    if (!isDragging.value) {
+      selectedItems.value = {};
+      selectorAreaRect.value = null;
+    } else {
+      selectorAreaRect.value = null;
+      isDragging.value = false;
+    }
   }
 
   return {
+    selectedItemsCounter, selectedItems,
+    isDragging,
     selectorAreaRect,
     stylesForSelectingField,
-    selectedItemsCounter,
-    selectedItems,
     updateSelectedItems,
     onPointerDown,
     onPointerMove,

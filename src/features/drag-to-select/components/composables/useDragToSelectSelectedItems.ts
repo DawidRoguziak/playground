@@ -6,6 +6,7 @@ import {DOMVector} from "@/features/drag-to-select/components/classes/DOMVector.
 type UseDragToSelectAreaSelectParams = {
   selectorAreaRect: Ref<DOMVector | null>
   isDragging: Ref<boolean>
+  containerRef: ReturnType<typeof useTemplateRef<HTMLElement>>
 }
 
 export type UseDragToSelectSelectedItems = {
@@ -17,6 +18,7 @@ export type UseDragToSelectSelectedItems = {
 export function useDragToSelectSelectedItems({
                                                selectorAreaRect,
                                                isDragging,
+                                               containerRef,
                                              }: UseDragToSelectAreaSelectParams): UseDragToSelectSelectedItems {
 
   const itemRefs = useTemplateRef<HTMLElement[]>('areaRef')
@@ -26,7 +28,6 @@ export function useDragToSelectSelectedItems({
     return Object.keys(selectedItems.value).length;
   });
 
-  const containerRef = useTemplateRef<HTMLElement>("dragToSelectAreaRef");
   const {x: containerX, y: containerY} = useElementBounding(containerRef);
 
 
